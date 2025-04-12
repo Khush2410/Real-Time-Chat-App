@@ -1,7 +1,11 @@
 const http = require("http");
 const { Server } = require("socket.io");
 
-const server = http.createServer(); 
+const server = http.createServer();
+const dotenv = require('dotenv');
+dotenv.config({ path: './../environment.env' });
+const port = process.env.PORT || 8000; 
+
 
 const io = new Server(server, {
   cors: {
@@ -10,8 +14,8 @@ const io = new Server(server, {
   }
 });
 
-server.listen(8000, () => {
-  console.log("Socket.io server running on port 8000");
+server.listen(port, () => {
+  console.log(`Socket.io server running on port ${port}`);
 });
 
 
