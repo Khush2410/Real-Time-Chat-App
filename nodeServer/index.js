@@ -1,18 +1,16 @@
+const express = require('express');
 const http = require("http");
 const { Server } = require("socket.io");
+const path = require('path');
+const app = express();
 
-const server = http.createServer();
+const server = http.createServer(app);
 const dotenv = require('dotenv');
 dotenv.config({ path: './../environment.env' });
 const port = process.env.PORT || 8000; 
+const io = new Server(server);
 
-
-const io = new Server(server, {
-  cors: {
-    origin: "https://real-time-chat-app-front-end.vercel.app/",
-    methods: ["GET", "POST"]
-  }
-});
+app.use(express.static(path.join(__dirname, '..')));
 
 server.listen(port, () => {
   console.log(`Socket.io server running on port ${port}`);
